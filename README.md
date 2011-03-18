@@ -15,7 +15,7 @@ such as display, generation or manipulation.
 
 ## Usage
 
-### Example 1: displaying a SVG into a Swing JFrame.
+### Example 1: creating a SVG and displaying it into a Swing JFrame.
 
      (defn analemma-svg
        "Creates a SVG representation with the Analemma functions"
@@ -45,8 +45,55 @@ such as display, generation or manipulation.
          (.setSize frame 800 600)
          (.setSize canvas 800 600)
          (.setVisible frame true)))
+
+### Example 2: dynamically modifying a SVG
+
+This example draw two rectangles. When the user clicks on the biggest
+rectangle, the color and position of the other rectangle will change.
+
+     (defn create-svg
+       "Creates a SVG representation with the Analemma functions"
+       []
+       (svg
+        (-> (rect 20 30 100 400 :id "rect0")
+            (style :fill "white" :stroke "blue" :stroke-width 10))
+        (-> (rect 50 250 50 80 :id "rect1")
+            (style :fill "white" :stroke "red" :stroke-width 10))
+        (-> (text "Click inside the blue rectangle!")
+            (add-attrs :x 450 :y 80)
+            (style :font-size "20px"))))
      
-The full example is available in the test directory.
+     (defn random-color
+       []
+       (letfn [(color
+                []
+                (Integer/toHexString (rand-int 16)))]
+         (apply format "#%s%s%s%s%s%s" (repeatedly 6 color))))
+     
+     (defn click-listener
+       [event doc]
+       (let [rect1 (dom/element-by-id doc "rect1")
+             x (Integer/parseInt (dom/attr rect1 :x))]
+         ;; changes rectangle position and color
+         (dom/add-attrs rect1 {:style (style-str :fill (random-color))
+                               :x (+ x 10)})))
+     
+     (defn -main
+       []
+       ;; Converts the SVG representation to a XML Document
+       ;; and displays the SVG in a JFrame
+       (let [doc (svg-doc (create-svg))
+             rect (dom/element-by-id doc "rect0") 
+             canvas (jsvgcanvas)
+             frame (JFrame.)]
+         (dom/add-event-listener rect "click" click-listener doc)
+         (set-document canvas doc)
+         (.add (.getContentPane frame) canvas)
+         (.setSize frame 800 600)
+         (.setSize canvas 800 600)
+         (.setVisible frame true)))
+     
+The full examples are available in the test directory.
 
 ## License
 

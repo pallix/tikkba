@@ -4,7 +4,8 @@
 (ns ^{:doc "Utilities functions for DOM manipulation."}
   tikkba.utils.dom
   (:use clojure.pprint)
-  (:require [analemma.xml :as xml]))
+  (:require [analemma.xml :as xml])
+  (:import org.w3c.dom.events.EventListener))
 
 ;;; wrapper of the DOM API
 
@@ -27,6 +28,11 @@
   "See org.w3c.dom.Element.setAttribute."
   [elt name value]
   (.setAttribute elt name value))
+
+(defn attribute
+  "See org.w3c.dom.Element.getAttribute."
+  [elt name]
+  (.getAttribute elt name))
 
 (defn set-text-content
   "See org.w3c.dom.Node.setTextContent."
@@ -55,7 +61,31 @@
         len (.getLength nodes)]
     (map #(.item nodes %) (range len))))
 
+(defn element-by-id
+  "See org.w3c.dom.Document.getElementById"
+  [doc id]
+  (.getElementById doc id))
+
+(defn add-event-listener
+  "Adds an EventListener to the EventTarget.
+   When the event fires, f will be invoked with the
+   event as its first argument followed by args. The
+   event is not consumed by the listener.
+   Returns the listener."
+  [elt type f & args] ()
+  (let [listener (reify EventListener
+                   (handleEvent
+                    [this evt]
+                    (apply f evt args)))]
+    (.addEventListener elt type listener false)
+    listener))
+
 ;;; helper functions
+
+(defn attr
+  "Returns the attribute value."
+  [elt att]
+  (attribute elt (name att)))
 
 (defn add-attrs
   "Adds the attributes represented by the map attrs
