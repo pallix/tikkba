@@ -92,7 +92,14 @@ rectangle, the color and position of the other rectangle will change.
          (.setSize frame 800 600)
          (.setSize canvas 800 600)
          (.setVisible frame true)))
-     
+
+### Example 3: creating a SVG file
+
+     (let [doc (svg-doc (create-svg))]
+         (dom/spit-xml "/tmp/rectangle.svg" doc
+                       :indent "yes"
+                       :encoding "UTF8"))
+                                                      
 The full examples are available in the test directory.
 
 ## License

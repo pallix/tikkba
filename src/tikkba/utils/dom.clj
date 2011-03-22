@@ -4,8 +4,13 @@
 (ns ^{:doc "Utilities functions for DOM manipulation."}
   tikkba.utils.dom
   (:use clojure.pprint)
-  (:require [analemma.xml :as xml])
-  (:import org.w3c.dom.events.EventListener))
+  (:require [analemma.xml :as xml]
+            [clojure.java.io :as jio])
+  (:import org.w3c.dom.events.EventListener
+           java.io.File
+           javax.xml.transform.dom.DOMSource
+           javax.xml.transform.stream.StreamResult
+           javax.xml.transform.TransformerFactory))
 
 ;;; wrapper of the DOM API
 
@@ -81,6 +86,24 @@
     listener))
 
 ;;; helper functions
+
+(defn spit-xml
+  "Open f with writer and writes the XML content
+   into it, then closes f.
+
+   Options is a suite of key/value and is used for 
+   the output properties of the XML transformation.
+   Valid options are :indent, :encoding etc. 
+   See javax.xml.transform.OutputKeys"
+  [f doc & options]
+  (with-open [writer (jio/writer f)]
+    (let [src (DOMSource. doc)
+          result (StreamResult. writer)
+          xformer (.newTransformer (TransformerFactory/newInstance))
+          options (apply hash-map options)]
+      (doseq [[k v] options]
+        (.setOutputProperty xformer (name k) v))
+      (.transform xformer src result))))
 
 (defn attr
   "Returns the attribute value."
