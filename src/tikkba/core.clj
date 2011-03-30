@@ -29,4 +29,4 @@
    Used to modify the DOM tree in a thread-safe way. 
    This function must NOT be called from the Swing thread."
   `(let [canvas# ~canvas]
-     (invoke-later canvas# (fn [] ~@body))))
+     (invoke-and-wait canvas# (fn [] ~@body))))
