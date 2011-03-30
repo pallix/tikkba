@@ -1,6 +1,6 @@
 (ns tikkba.test.functional.dynamic
   (:use [analemma svg charts xml]
-        [tikkba swing dom]
+        [tikkba swing dom core]
         tikkba.utils.xml)
   (:require [tikkba.utils.dom :as dom])
   (:import javax.swing.JFrame))
@@ -25,12 +25,14 @@
     (apply format "#%s%s%s%s%s%s" (repeatedly 6 color))))
 
 (defn click-listener
-  [event doc]
+  [event canvas doc]
   (let [rect1 (dom/element-by-id doc "rect1")
         x (Integer/parseInt (dom/attr rect1 :x))]
     ;; changes rectangle position and color
-    (dom/add-attrs rect1 {:style (style-str :fill (random-color))
-                          :x (+ x 10)})))
+    (do-batik
+     canvas
+     (dom/add-attrs rect1 {:style (style-str :fill (random-color))
+                           :x (+ x 10)}))))
 
 (defn -main
   []
@@ -40,7 +42,7 @@
         rect (dom/element-by-id doc "rect0") 
         canvas (jsvgcanvas)
         frame (JFrame.)]
-    (dom/add-event-listener rect "click" click-listener doc)
+    (dom/add-event-listener rect "click" click-listener canvas doc)
     (set-document canvas doc)
     (.add (.getContentPane frame) canvas)
     (.setSize frame 800 600)

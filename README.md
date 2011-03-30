@@ -70,14 +70,16 @@ rectangle, the color and position of the other rectangle will change.
                 (Integer/toHexString (rand-int 16)))]
          (apply format "#%s%s%s%s%s%s" (repeatedly 6 color))))
      
-     (defn click-listener
-       [event doc]
-       (let [rect1 (dom/element-by-id doc "rect1")
-             x (Integer/parseInt (dom/attr rect1 :x))]
-         ;; changes rectangle position and color
+    (defn click-listener
+      [event canvas doc]
+      (let [rect1 (dom/element-by-id doc "rect1")
+            x (Integer/parseInt (dom/attr rect1 :x))]
+        ;; changes rectangle position and color
+        (do-batik
+         canvas
          (dom/add-attrs rect1 {:style (style-str :fill (random-color))
-                               :x (+ x 10)})))
-     
+                               :x (+ x 10)}))))
+         
      (defn -main
        []
        ;; Converts the SVG representation to a XML Document
