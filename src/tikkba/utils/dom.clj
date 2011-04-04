@@ -77,7 +77,7 @@
    event as its first argument followed by args. The
    event is not consumed by the listener.
    Returns the listener."
-  [elt type f & args] ()
+  [elt type f & args]
   (let [listener (reify EventListener
                    (handleEvent
                     [this evt]
@@ -86,6 +86,11 @@
     listener))
 
 ;;; helper functions
+
+(defn element-id
+  "Returns the element with the given id"
+  [doc id]
+  (element-by-id doc (name id)))
 
 (defn spit-xml
   "Open f with writer and writes the XML content
