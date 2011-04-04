@@ -54,6 +54,11 @@
   [node child]
   (.appendChild node child))
 
+(defn remove-child
+  "See org.w3c.dom.Node.appendChild"
+  [node child]
+  (.removeChild node child))
+
 (defn child-nodes
   "See org.w3c.dom.Node.getChildNodes"
   [node]
