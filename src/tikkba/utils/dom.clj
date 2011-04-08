@@ -12,7 +12,9 @@
            javax.xml.transform.stream.StreamResult
            javax.xml.transform.TransformerFactory))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; wrapper of the DOM API
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn document-element
   "See org.w3c.dom.Document.getDocumentElement"
@@ -54,6 +56,11 @@
   [node child]
   (.appendChild node child))
 
+(defn insert-before
+  "See org.w3c.dom.Node.insertBefore"
+  [node new-child ref-child]
+  (.insertBefore node new-child ref-child))
+
 (defn remove-child
   "See org.w3c.dom.Node.appendChild"
   [node child]
@@ -64,18 +71,19 @@
   [node]
   (.getChildNodes node))
 
-(defn child-nodes-seq
-  "Returns the child nodes of node as a sequence."
+(defn next-sibling
+  "See org.w3c.dom.Node.getNextSibling"
   [node]
-  (let [nodes (child-nodes node)
-        len (.getLength nodes)]
-    (map #(.item nodes %) (range len))))
+  (.getNextSibling node))
 
 (defn element-by-id
   "See org.w3c.dom.Document.getElementById"
   [doc id]
   (.getElementById doc id))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; helper functions
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn add-event-listener
   "Adds an EventListener to the EventTarget.
    When the event fires, f will be invoked with the
@@ -90,7 +98,12 @@
     (.addEventListener elt type listener false)
     listener))
 
-;;; helper functions
+(defn child-nodes-seq
+  "Returns the child nodes of node as a sequence."
+  [node]
+  (let [nodes (child-nodes node)
+        len (.getLength nodes)]
+    (map #(.item nodes %) (range len))))
 
 (defn element-id
   "Returns the element with the given id"
