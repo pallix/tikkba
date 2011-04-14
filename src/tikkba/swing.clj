@@ -3,7 +3,7 @@
 
 (ns ^{:doc "This namespace wraps org.apache.batik.swing.*"}
   tikkba.swing
-  (:import org.apache.batik.swing.JSVGCanvas
+  (:import (org.apache.batik.swing JSVGCanvas JSVGScrollPane)
            org.apache.batik.swing.svg.SVGLoadEventDispatcherAdapter
            org.apache.batik.swing.gvt.GVTTreeRendererAdapter))
 
@@ -15,6 +15,11 @@
   (let [canvas (JSVGCanvas. )]
     (.setDocumentState canvas JSVGCanvas/ALWAYS_DYNAMIC)
     canvas))
+
+(defn jsvgscrollpane
+  "Creates a new JSVGScrollPane."
+  [canvas]
+  (JSVGScrollPane. canvas))
 
 (defn set-document
   "Set the XML document of the canvas. Returns the canvas."
