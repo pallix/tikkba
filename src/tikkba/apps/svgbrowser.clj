@@ -66,3 +66,7 @@
     (.end compoundedit)
     compoundedit))
 
+(defn post-edit
+  "See javax.swing.undo.UndoableEditSupport.postEdit"
+  [undosupport edit]
+  (.postEdit undosupport edit))
