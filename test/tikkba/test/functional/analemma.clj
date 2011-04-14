@@ -1,7 +1,7 @@
 (ns tikkba.test.functional.analemma
   (:use [analemma svg charts xml]
         [tikkba swing dom])
-  (:import javax.swing.JFrame))
+  (:import (javax.swing JFrame SwingUtilities)))
 
 (def analemma-data)
 
@@ -21,18 +21,23 @@
                     (translate-value y -25 30 125 0)
                     2 :fill "#000066")))))
 
+(defn create-frame
+  [canvas]
+  (let [frame (JFrame.)]
+    (.add (.getContentPane frame) canvas)
+    (.setSize frame 800 200)
+    (.setDefaultCloseOperation frame JFrame/EXIT_ON_CLOSE)
+    (SwingUtilities/invokeAndWait
+     (fn [] (.setVisible frame true)))))
+
 (defn -main
   []
   ;; Converts the SVG representation to a XML Document
   ;; and displays the SVG in a JFrame
   (let [doc (svg-doc (analemma-svg))
-        canvas (jsvgcanvas)
-        frame (JFrame.)]
+        canvas (jsvgcanvas)]
     (set-document canvas doc)
-    (.add (.getContentPane frame) canvas)
-    (.setSize frame 800 600)
-    (.setSize canvas 800 600)
-    (.setVisible frame true)))
+    (create-frame canvas)))
 
 (def analemma-data
      [[-15.165 -23.07]

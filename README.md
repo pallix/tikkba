@@ -32,20 +32,25 @@ such as display, generation or manipulation.
                  (circle (translate-value x -30 5 0 125)
                          (translate-value y -25 30 125 0)
                          2 :fill "#000066")))))
+     (defn create-frame
+       [canvas]
+       (let [frame (JFrame.)]
+         (.add (.getContentPane frame) canvas)
+         (.setSize frame 800 200)
+         (.setDefaultCloseOperation frame JFrame/EXIT_ON_CLOSE)
+         (SwingUtilities/invokeAndWait
+          (fn [] (.setVisible frame true)))))
      
      (defn -main
        []
        ;; Converts the SVG representation to a XML Document
        ;; and displays the SVG in a JFrame
        (let [doc (svg-doc (analemma-svg))
-             canvas (jsvgcanvas)
-             frame (JFrame.)]
+             canvas (jsvgcanvas)]
          (set-document canvas doc)
-         (.add (.getContentPane frame) canvas)
-         (.setSize frame 800 600)
-         (.setSize canvas 800 600)
-         (.setVisible frame true)))
+         (create-frame canvas)))
 
+         
 ### Example 2: dynamically modifying a SVG
 
 This example draw two rectangles. When the user clicks on the biggest
@@ -70,30 +75,37 @@ rectangle, the color and position of the other rectangle will change.
                 (Integer/toHexString (rand-int 16)))]
          (apply format "#%s%s%s%s%s%s" (repeatedly 6 color))))
      
-    (defn click-listener
-      [event canvas doc]
-      (let [rect1 (dom/element-by-id doc "rect1")
-            x (Integer/parseInt (dom/attr rect1 :x))]
-        ;; changes rectangle position and color
-        (do-batik
-         canvas
-         (dom/add-attrs rect1 {:style (style-str :fill (random-color))
-                               :x (+ x 10)}))))
-         
+     (defn click-listener
+       [event canvas doc]
+       (let [rect1 (dom/element-by-id doc "rect1")
+             x (Integer/parseInt (dom/attr rect1 :x))]
+         ;; changes rectangle position and color
+         (do-batik
+          canvas
+          (dom/add-attrs rect1
+                         :style (style-str :fill (random-color))
+                         :x (+ x 10)))))
+     
+     (defn create-frame
+       [canvas]
+       (let [frame (JFrame.)]
+         (.add (.getContentPane frame) canvas)
+         (.setSize frame 800 600)
+         (.setDefaultCloseOperation frame JFrame/EXIT_ON_CLOSE)
+         ;; or use the do-swing macro of clojure.contrib.swing-utils:
+         (SwingUtilities/invokeAndWait
+          (fn [] (.setVisible frame true)))))
+     
      (defn -main
        []
        ;; Converts the SVG representation to a XML Document
        ;; and displays the SVG in a JFrame
        (let [doc (svg-doc (create-svg))
              rect (dom/element-by-id doc "rect0") 
-             canvas (jsvgcanvas)
-             frame (JFrame.)]
-         (dom/add-event-listener rect "click" click-listener doc)
+             canvas (jsvgcanvas)]
+         (dom/add-event-listener rect "click" click-listener canvas doc)
          (set-document canvas doc)
-         (.add (.getContentPane frame) canvas)
-         (.setSize frame 800 600)
-         (.setSize canvas 800 600)
-         (.setVisible frame true)))
+         (create-frame canvas)))
 
 ### Example 3: creating a SVG file
 

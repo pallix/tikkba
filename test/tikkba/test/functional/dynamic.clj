@@ -1,9 +1,10 @@
 (ns tikkba.test.functional.dynamic
-  (:use [analemma svg charts xml]
+  (:use clojure.pprint
+        [analemma svg charts xml]
         [tikkba swing dom core]
         tikkba.utils.xml)
   (:require [tikkba.utils.dom :as dom])
-  (:import javax.swing.JFrame))
+  (:import (javax.swing JFrame SwingUtilities)))
 
 (defn create-svg
   "Creates a SVG representation with the Analemma functions"
@@ -31,8 +32,19 @@
     ;; changes rectangle position and color
     (do-batik
      canvas
-     (dom/add-attrs rect1 {:style (style-str :fill (random-color))
-                           :x (+ x 10)}))))
+     (dom/add-attrs rect1
+                    :style (style-str :fill (random-color))
+                    :x (+ x 10)))))
+
+(defn create-frame
+  [canvas]
+  (let [frame (JFrame.)]
+    (.add (.getContentPane frame) canvas)
+    (.setSize frame 800 600)
+    (.setDefaultCloseOperation frame JFrame/EXIT_ON_CLOSE)
+    ;; or use the do-swing macro of clojure.contrib.swing-utils:
+    (SwingUtilities/invokeAndWait
+     (fn [] (.setVisible frame true)))))
 
 (defn -main
   []
@@ -40,12 +52,8 @@
   ;; and displays the SVG in a JFrame
   (let [doc (svg-doc (create-svg))
         rect (dom/element-by-id doc "rect0") 
-        canvas (jsvgcanvas)
-        frame (JFrame.)]
+        canvas (jsvgcanvas)]
     (dom/add-event-listener rect "click" click-listener canvas doc)
     (set-document canvas doc)
-    (.add (.getContentPane frame) canvas)
-    (.setSize frame 800 600)
-    (.setSize canvas 800 600)
-    (.setVisible frame true)))
+    (create-frame canvas)))
 

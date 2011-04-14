@@ -21,5 +21,5 @@
   (let [doc (dom/create-document (dom-implementation) *svg-ns* "svg" nil)
         tree (dom/elements doc *svg-ns* tag)]
     (dom/append-children (dom/document-element doc) (dom/child-nodes-seq tree))
-    (dom/add-attrs tree (get-attrs tag))
+    (dom/add-map-attrs tree (get-attrs tag))
     doc))

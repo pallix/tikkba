@@ -134,11 +134,15 @@
   (attribute elt (name att)))
 
 (defn add-attrs
-  "Adds the attributes represented by the map attrs
-   to the element elt."
-  [elt attrs]
-  (doseq [[key value] attrs]
+  "Adds the attributes to the element elt."
+  [elt & attrs]
+  (doseq [[key value] (partition 2 attrs)]
     (set-attribute elt (name key) (str value))))
+
+(defn add-map-attrs
+  "Adds the attributes represented by a map to the element elt"
+  [elt attrs]
+  (apply add-attrs elt (flatten (seq attrs))))
 
 (defn append-children
   "Add the children to node."
@@ -152,7 +156,7 @@
     (let [name (xml/get-name tag)
           e (create-element-ns doc ns name)
           attrs (xml/get-attrs tag)]
-      (add-attrs e attrs)
+      (add-map-attrs e attrs)
       e)))
 
 (defn elements-helper
