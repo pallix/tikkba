@@ -172,7 +172,7 @@
        (let [[tag & xs] queued-tags
              [e & rst-elts] queued-elts]
          (if (string? tag)
-           (recur doc ns root-elt xs rst-elts)
+           (recur doc ns root-elt xs queued-elts)
            (let [children (xml/get-content tag)
                  fchild (first children)]
              (if (and (= (count children) 1) (string? fchild))
