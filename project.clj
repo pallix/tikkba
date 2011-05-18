@@ -1,4 +1,4 @@
-(defproject tikkba "0.1.1-SNAPSHOT"
+(defproject tikkba "0.2.0-SNAPSHOT"
   :description
   "Tikkba is Clojure library for the creation and the dynamic modification
 of SVG documents. It wraps the Apache Batik library and provides functions to
