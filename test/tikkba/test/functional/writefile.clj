@@ -11,10 +11,7 @@
    (-> (rect 20 30 100 400 :id "rect0")
        (style :fill "white" :stroke "blue" :stroke-width 10))
    (-> (rect 50 250 50 80 :id "rect1")
-       (style :fill "white" :stroke "red" :stroke-width 10))
-   (-> (text "Click inside the blue rectangle!")
-       (add-attrs :x 450 :y 80)
-       (style :font-size "20px"))))
+       (style :fill "white" :stroke "red" :stroke-width 10))))
 
 (defn -main
   []

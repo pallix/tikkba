@@ -1,7 +1,7 @@
 # Tikkba
 
-Tikkba is a Clojure library for the creation and the dynamic modification
-of SVG documents. It wraps the Apache Batik library and provides functions to
+Tikkba is a Clojure library for the **creation and the dynamic modification
+of SVG documents**. It wraps the **Apache Batik library** and provides functions to
 create SVG images with the Clojure-based SVG DSL of the Analemma library.
 
 
