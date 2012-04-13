@@ -118,6 +118,6 @@ The full examples are available in the test directory.
 
 ## License
 
-Copyright (C) 2010 Fraunhofer Gesellschaft
+Copyright (C) 2010-2012 Fraunhofer Gesellschaft
 
 Distributed under the Eclipse Public License, the same as Clojure.
