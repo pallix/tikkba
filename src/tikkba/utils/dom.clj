@@ -24,7 +24,7 @@
 (defn create-document
   "See org.w3c.dom.DOMImplementation.createDocument"
   [domimpl ns name doctype]
-  (.createDocument domimpl ns name nil))
+  (.createDocument domimpl ns name doctype))
 
 (defn set-attribute-ns
   "See org.w3c.dom.Element.setAttributeNS."
