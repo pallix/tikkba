@@ -17,6 +17,15 @@ such as display, generation or manipulation.
 
 ### Example 1: creating a SVG and displaying it into a Swing JFrame.
 
+     (ns tikkba.example
+       (:use [analemma.svg]
+             [analemma.xml]
+             [examples.analemma]
+             [tikkba.core]
+             [tikkba.dom]
+             [tikkba.swing])
+       (:import (javax.swing JFrame SwingUtilities)))
+     
      (defn analemma-svg
        "Creates a SVG representation with the Analemma functions"
        []
