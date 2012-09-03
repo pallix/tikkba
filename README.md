@@ -50,6 +50,7 @@ such as display, generation or manipulation.
          (set-document canvas doc)
          (create-frame canvas)))
 
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/test/tikkba/test/functional/analemma.clj) 
          
 ### Example 2: dynamically modifying a SVG
 
@@ -107,6 +108,8 @@ rectangle, the color and position of the other rectangle will change.
          (set-document canvas doc)
          (create-frame canvas)))
 
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/test/tikkba/test/functional/dynamic.clj) 
+
 ### Example 3: creating a SVG file
 
      (let [doc (svg-doc (create-svg))]
@@ -114,7 +117,9 @@ rectangle, the color and position of the other rectangle will change.
                        :indent "yes"
                        :encoding "UTF8"))
                                                       
-The full examples are available in the test directory.
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/test/tikkba/test/functional/writefile.clj) 
+
+__All examples are available in the__ [test directory](https://github.com/pallix/tikkba/tree/master/test/tikkba/test/functional).
 
 ## License
 
