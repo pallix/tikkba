@@ -50,7 +50,7 @@ such as display, generation or manipulation.
          (set-document canvas doc)
          (create-frame canvas)))
 
-[See the full code of this example](https://github.com/pallix/tikkba/blob/master/test/tikkba/test/functional/analemma.clj) 
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/analemma.clj) 
          
 ### Example 2: dynamically modifying a SVG
 
@@ -108,7 +108,7 @@ rectangle, the color and position of the other rectangle will change.
          (set-document canvas doc)
          (create-frame canvas)))
 
-[See the full code of this example](https://github.com/pallix/tikkba/blob/master/test/tikkba/test/functional/dynamic.clj) 
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/dynamic.clj) 
 
 ### Example 3: creating a SVG file
 
@@ -117,9 +117,18 @@ rectangle, the color and position of the other rectangle will change.
                        :indent "yes"
                        :encoding "UTF8"))
                                                       
-[See the full code of this example](https://github.com/pallix/tikkba/blob/master/test/tikkba/test/functional/writefile.clj) 
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/writefile.clj) 
 
-__All examples are available in the__ [test directory](https://github.com/pallix/tikkba/tree/master/test/tikkba/test/functional).
+__All examples are available in the__ [examples directory](https://github.com/pallix/tikkba/tree/master/src/tikkba/examples/).
+
+You can run the examples with the following command:
+
+    lein run -m <namespace-of-the-example>
+
+For examples:
+
+    lein run -m tikkba.examples.dynamic
+    lein run -m tikkba.examples.output-string
 
 ## License
 

@@ -10,7 +10,9 @@
            java.io.File
            javax.xml.transform.dom.DOMSource
            javax.xml.transform.stream.StreamResult
-           javax.xml.transform.TransformerFactory))
+           javax.xml.transform.TransformerFactory
+           (java.io InputStreamReader ByteArrayInputStream
+                    ByteArrayOutputStream)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; wrapper of the DOM API
@@ -127,6 +129,18 @@
       (doseq [[k v] options]
         (.setOutputProperty xformer (name k) v))
       (.transform xformer src result))))
+
+(defn spit-str
+  "Returns the content of doc as a UTF-8 XML string.
+
+   Options are as the same as spit-xml."
+  [doc & options]
+  (let [os (ByteArrayOutputStream.)]
+    (apply spit-xml os doc options)
+    (slurp
+     (InputStreamReader.
+      (ByteArrayInputStream. (.toByteArray os))
+      "UTF8"))))
 
 (defn attr
   "Returns the attribute value."
