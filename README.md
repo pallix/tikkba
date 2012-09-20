@@ -13,6 +13,13 @@ such as display, generation or manipulation.
 
 [Analemma](http://liebke.github.com/analemma/)
 
+## Installation
+
+To include the library as a dependency in your Leiningen project, add the following entry to your project.clj file:
+
+     [tikkba "0.4.0"]
+
+
 ## Usage
 
 ### Example 1: creating a SVG and displaying it into a Swing JFrame.
