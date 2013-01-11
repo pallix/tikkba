@@ -5,7 +5,8 @@
   tikkba.utils.dom
   (:use clojure.pprint)
   (:require [analemma.xml :as xml]
-            [clojure.java.io :as jio])
+            [clojure.java.io :as jio]
+            [clojure.string :as str])
   (:import org.w3c.dom.events.EventListener
            java.io.File
            javax.xml.transform.dom.DOMSource
@@ -36,7 +37,10 @@
 (defn set-attribute
   "See org.w3c.dom.Element.setAttribute."
   [elt name value]
-  (.setAttribute elt name value))
+  (let [[local-name ns-alias] (reverse (str/split name #":"))]
+    (if ns-alias
+      (set-attribute-ns elt (.lookupNamespaceURI elt ns-alias) name value)
+      (.setAttribute elt name value))))
 
 (defn attribute
   "See org.w3c.dom.Element.getAttribute."
