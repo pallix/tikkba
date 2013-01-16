@@ -6,14 +6,15 @@
 (defn image-svg
   "Create an SVG representation with an image in it."
   []
-  (svg (image "https://raw.github.com/liebke/analemma/master/images/analemma-logo.png"
-              :height 142 :width 473)))
+  (svg (image (clojure.java.io/resource
+               "org/apache/batik/apps/svgbrowser/resources/batik.gif")
+              :height 160 :width 160)))
 
 (defn create-frame
   [canvas]
   (let [frame (JFrame.)]
     (.add (.getContentPane frame) canvas)
-    (.setSize frame 800 200)
+    (.setSize frame 200 200)
     (.setDefaultCloseOperation frame JFrame/EXIT_ON_CLOSE)
     (SwingUtilities/invokeAndWait
      (fn [] (.setVisible frame true)))))
