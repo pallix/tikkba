@@ -37,10 +37,7 @@
 (defn set-attribute
   "See org.w3c.dom.Element.setAttribute."
   [elt name value]
-  (let [[local-name ns-alias] (reverse (str/split name #":"))]
-    (if ns-alias
-      (set-attribute-ns elt (.lookupNamespaceURI elt ns-alias) name value)
-      (.setAttribute elt name value))))
+  (.setAttribute elt name value))
 
 (defn attribute
   "See org.w3c.dom.Element.getAttribute."
