@@ -5,18 +5,13 @@
 
 (def xlink-ns "http://www.w3.org/1999/xlink")
 
-(defn attrs
-  "Return a map of the element's attributes as strings"
-  [el]
-  (let [attrs (.getAttributes el)]
-    (apply merge (for [n (range (.getLength attrs))
-                       :let [attr (.item attrs n)]]
-                   {(.getName attr) (.getValue attr)}))))
-
-(deftest t-set-attribute-ns
+(deftest test-add-attrs
   (let [doc (create-document (dom-implementation) svg-ns "svg" nil)
-        el (create-element-ns doc svg-ns "image")]
-    (set-attribute el "xlink:href" "foo.png")
-    (.setAttributeNS el xlink-ns "bar" "baz")
-    (is (= (get (attrs el) "xlink:href" "foo.png")))
-    (is (= (.getAttributeNS el xlink-ns "href") "foo.png"))))
+        el (create-element-ns doc svg-ns "image")
+        atts ["xlink:href" "foo.png"
+              "key1" "val1"
+              :key2  "val2"]]
+    (apply add-attrs el atts)
+    (is (= "foo.png" (.getAttributeNS el xlink-ns "href")) "namespaced")
+    (is (= "val1" (.getAttribute el "key1")) "un-namespaced string")
+    (is (= "val2" (.getAttribute el "key2")) "un-namespaced keyword")))

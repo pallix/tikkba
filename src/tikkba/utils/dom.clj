@@ -152,7 +152,12 @@
   "Adds the attributes to the element elt."
   [elt & attrs]
   (doseq [[key value] (partition 2 attrs)]
-    (set-attribute elt (name key) (str value))))
+    (let [name (name key)
+          value (str value)
+          [local-name ns-alias] (reverse (str/split name #":"))]
+      (if ns-alias
+        (set-attribute-ns elt (.lookupNamespaceURI elt ns-alias) local-name value)
+        (set-attribute elt name value)))))
 
 (defn add-map-attrs
   "Adds the attributes represented by a map to the element elt"
