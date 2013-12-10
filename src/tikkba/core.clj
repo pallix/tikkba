@@ -30,3 +30,4 @@
    This function must NOT be called from the Swing thread."
   `(let [canvas# ~canvas]
      (invoke-and-wait canvas# (fn [] ~@body))))
+
