@@ -17,7 +17,7 @@ such as display, generation or manipulation.
 
 To include the library as a dependency in your Leiningen project, add the following entry to your project.clj file:
 
-     [tikkba "0.4.0"]
+     [tikkba "0.5.0"]
 
 
 ## Usage
@@ -47,7 +47,7 @@ To include the library as a dependency in your Leiningen project, add the follow
          (.setDefaultCloseOperation frame JFrame/EXIT_ON_CLOSE)
          (SwingUtilities/invokeAndWait
           (fn [] (.setVisible frame true)))))
-     
+
      (defn -main
        []
        ;; Converts the SVG representation to a XML Document
@@ -57,8 +57,8 @@ To include the library as a dependency in your Leiningen project, add the follow
          (set-document canvas doc)
          (create-frame canvas)))
 
-[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/analemma.clj) 
-         
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/analemma.clj)
+
 ### Example 2: dynamically modifying a SVG
 
 This example draw two rectangles. When the user clicks on the biggest
@@ -75,14 +75,14 @@ rectangle, the color and position of the other rectangle will change.
         (-> (text "Click inside the blue rectangle!")
             (add-attrs :x 450 :y 80)
             (style :font-size "20px"))))
-     
+
      (defn random-color
        []
        (letfn [(color
                 []
                 (Integer/toHexString (rand-int 16)))]
          (apply format "#%s%s%s%s%s%s" (repeatedly 6 color))))
-     
+
      (defn click-listener
        [event canvas doc]
        (let [rect1 (dom/element-by-id doc "rect1")
@@ -93,7 +93,7 @@ rectangle, the color and position of the other rectangle will change.
           (dom/add-attrs rect1
                          :style (style-str :fill (random-color))
                          :x (+ x 10)))))
-     
+
      (defn create-frame
        [canvas]
        (let [frame (JFrame.)]
@@ -103,19 +103,19 @@ rectangle, the color and position of the other rectangle will change.
          ;; or use the do-swing macro of clojure.contrib.swing-utils:
          (SwingUtilities/invokeAndWait
           (fn [] (.setVisible frame true)))))
-     
+
      (defn -main
        []
        ;; Converts the SVG representation to a XML Document
        ;; and displays the SVG in a JFrame
        (let [doc (svg-doc (create-svg))
-             rect (dom/element-by-id doc "rect0") 
+             rect (dom/element-by-id doc "rect0")
              canvas (jsvgcanvas)]
          (dom/add-event-listener rect "click" click-listener canvas doc)
          (set-document canvas doc)
          (create-frame canvas)))
 
-[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/dynamic.clj) 
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/dynamic.clj)
 
 ### Example 3: creating a SVG file
 
@@ -123,8 +123,8 @@ rectangle, the color and position of the other rectangle will change.
          (dom/spit-xml "/tmp/rectangle.svg" doc
                        :indent "yes"
                        :encoding "UTF8"))
-                                                      
-[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/writefile.clj) 
+
+[See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/writefile.clj)
 
 __All examples are available in the__ [examples directory](https://github.com/pallix/tikkba/tree/master/src/tikkba/examples/).
 
@@ -136,8 +136,8 @@ For examples:
 
     lein run -m tikkba.examples.dynamic
     lein run -m tikkba.examples.output-string
-    
-    
+
+
 ### Example 4: transcode svg image to raster file
 
 Here is a simple example, which shows usage of [Batik's transcoders](http://xmlgraphics.apache.org/batik/using/transcoder.html#howtousetranscoderAPI).
@@ -145,7 +145,7 @@ Here is a simple example, which shows usage of [Batik's transcoders](http://xmlg
 ```
 (ns tikkba.examples.transcoder
 	(:require [tikkba.dom :refer [svg-doc]]
-          	 [analemma.svg :refer [svg rect]]           
+          	 [analemma.svg :refer [svg rect]]
           	 [analemma.xml :as xml]
           	 [tikkba.transcoder :as t])
 
@@ -154,19 +154,19 @@ Here is a simple example, which shows usage of [Batik's transcoders](http://xmlg
                       (->
                         (rect 10 10 400 50)
                         (xml/add-attrs :fill "red")))))
- 
+
     ;; using PNG transcoder
     (t/to-png canvas "/var/tmp/test.png")
-    (t/to-png canvas 
+    (t/to-png canvas
     		  "/var/tmp/temp/test.png"
     		  {:width 410 :height 60})
-    		  
+
     ;; using JPEG transcoder
     (t/to-jpeg canvas "/var/temp/test.jpeg")
-    (t/to-jpeg canvas 
+    (t/to-jpeg canvas
     			"/var/temp/test.jpeg"
     		   {:quality 0.6})
-    
+
 ```
 
 ## License
