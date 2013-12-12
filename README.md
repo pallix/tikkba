@@ -126,18 +126,6 @@ rectangle, the color and position of the other rectangle will change.
 
 [See the full code of this example](https://github.com/pallix/tikkba/blob/master/src/tikkba/examples/writefile.clj)
 
-__All examples are available in the__ [examples directory](https://github.com/pallix/tikkba/tree/master/src/tikkba/examples/).
-
-You can run the examples with the following command:
-
-    lein run -m <namespace-of-the-example>
-
-For examples:
-
-    lein run -m tikkba.examples.dynamic
-    lein run -m tikkba.examples.output-string
-
-
 ### Example 4: transcode svg image to raster file
 
 Here is a simple example, which shows usage of [Batik's transcoders](http://xmlgraphics.apache.org/batik/using/transcoder.html#howtousetranscoderAPI).
@@ -168,6 +156,19 @@ Here is a simple example, which shows usage of [Batik's transcoders](http://xmlg
     		   {:quality 0.6})
 
 ```
+
+
+__All examples are available in the__ [examples directory](https://github.com/pallix/tikkba/tree/master/src/tikkba/examples/).
+
+You can run the examples with the following command:
+
+    lein run -m <namespace-of-the-example>
+
+For examples:
+
+    lein run -m tikkba.examples.dynamic
+    lein run -m tikkba.examples.output-string
+
 
 ## License
 
