@@ -136,6 +136,38 @@ For examples:
 
     lein run -m tikkba.examples.dynamic
     lein run -m tikkba.examples.output-string
+    
+    
+### Example 4: transcode svg image to raster file
+
+Here is a simple example, which shows usage of [Batik's transcoders](http://xmlgraphics.apache.org/batik/using/transcoder.html#howtousetranscoderAPI).
+
+```
+(ns tikkba.examples.transcoder
+	(:require [tikkba.dom :refer [svg-doc]]
+          	 [analemma.svg :refer [svg rect]]           
+          	 [analemma.xml :as xml]
+          	 [tikkba.transcoder :as t])
+
+    (def canvas  (svg-doc
+                    (svg
+                      (->
+                        (rect 10 10 400 50)
+                        (xml/add-attrs :fill "red")))))
+ 
+    ;; using PNG transcoder
+    (t/to-png canvas "/var/tmp/test.png")
+    (t/to-png canvas 
+    		  "/var/tmp/temp/test.png"
+    		  {:width 410 :height 60})
+    		  
+    ;; using JPEG transcoder
+    (t/to-jpeg canvas "/var/temp/test.jpeg")
+    (t/to-jpeg canvas 
+    			"/var/temp/test.jpeg"
+    		   {:quality 0.6})
+    
+```
 
 ## License
 
