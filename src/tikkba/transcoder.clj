@@ -4,14 +4,15 @@
            [org.apache.batik.transcoder.image PNGTranscoder JPEGTranscoder]
            [org.apache.batik.transcoder TranscoderInput TranscoderOutput]))
 
-(def png-transcoder-hints {:height PNGTranscoder/KEY_HEIGHT
-                           :width PNGTranscoder/KEY_WIDTH})
+(def png-transcoder-hints {:height [PNGTranscoder/KEY_HEIGHT float]
+                           :width [PNGTranscoder/KEY_WIDTH float]
+                           :indexed [PNGTranscoder/KEY_INDEXED int]})
 
 (def default-png-options {})
 
-(def jpeg-transcoder-hints {:quality JPEGTranscoder/KEY_QUALITY
-                            :height JPEGTranscoder/KEY_HEIGHT
-                            :width JPEGTranscoder/KEY_WIDTH})
+(def jpeg-transcoder-hints {:quality [JPEGTranscoder/KEY_QUALITY float]
+                            :height [JPEGTranscoder/KEY_HEIGHT float]
+                            :width [JPEGTranscoder/KEY_WIDTH float]})
 
 (def default-jpeg-options {:quality 1})
 
@@ -25,8 +26,8 @@
   "Function that applies supported options to the transcoder.
   Returns: transcoder object"
   (doseq [[option value] options]
-    (when-let [opt-key (-> option keyword hints-map)]
-      (.addTranscodingHint transcoder opt-key (float value))))
+    (when-let [[opt-key coerce] (-> option keyword hints-map)]
+      (.addTranscodingHint transcoder opt-key (coerce value))))
   transcoder)
 
 (defn- transcode-doc [transcoder doc output-path]
