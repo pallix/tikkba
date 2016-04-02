@@ -1,4 +1,4 @@
-(defproject tikkba/tikkba "0.5.0"
+(defproject tikkba/tikkba "0.6.0"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojars.pallix/analemma "1.0.0" :exclusions [org.clojure/clojure]]
