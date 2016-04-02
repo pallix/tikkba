@@ -15,7 +15,7 @@ such as display, generation or manipulation.
 
 ## Installation
 
-To include the library as a dependency in your Leiningen project, add the following entry to your project.clj file:
+The Tikkba library is available on Clojars:
 
 [![Clojars Project](https://img.shields.io/clojars/v/tikkba.svg)](https://clojars.org/tikkba)
 
