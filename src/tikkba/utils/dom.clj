@@ -179,9 +179,16 @@
       (add-map-attrs e attrs)
       e)))
 
+(defn get-ns [tag ns]
+  (if (and (> (count tag) 1)
+           (map? (second tag)))
+    (get (second tag) :ns ns)
+    ns))
+
 (defn elements-helper
   ([doc ns tag]
-     (let [root-elt (elt doc ns tag)
+     (let [ns (get-ns tag ns)
+           root-elt (elt doc ns tag)
            children (xml/get-content tag)
            children-elts (map #(elt doc ns %) children)]
        (append-children root-elt children-elts)
@@ -193,7 +200,8 @@
              [e & rst-elts] queued-elts]
          (if (string? tag)
            (recur doc ns root-elt xs queued-elts)
-           (let [children (xml/get-content tag)
+           (let [ns (get-ns tag ns)
+                 children (xml/get-content tag)
                  fchild (first children)]
              (if (and (= (count children) 1) (string? fchild))
                (do
