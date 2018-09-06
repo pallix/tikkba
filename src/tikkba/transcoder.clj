@@ -4,15 +4,19 @@
            [org.apache.batik.transcoder.image PNGTranscoder JPEGTranscoder]
            [org.apache.batik.transcoder TranscoderInput TranscoderOutput]))
 
+(def mm-per-inch 25.4)
+
 (def png-transcoder-hints {:height [PNGTranscoder/KEY_HEIGHT float]
                            :width [PNGTranscoder/KEY_WIDTH float]
-                           :indexed [PNGTranscoder/KEY_INDEXED int]})
+                           :indexed [PNGTranscoder/KEY_INDEXED int]
+                           :dpi [PNGTranscoder/KEY_PIXEL_UNIT_TO_MILLIMETER #(float (/ mm-per-inch %))]})
 
 (def default-png-options {})
 
 (def jpeg-transcoder-hints {:quality [JPEGTranscoder/KEY_QUALITY float]
                             :height [JPEGTranscoder/KEY_HEIGHT float]
-                            :width [JPEGTranscoder/KEY_WIDTH float]})
+                            :width [JPEGTranscoder/KEY_WIDTH float]
+                            :dpi [JPEGTranscoder/KEY_PIXEL_UNIT_TO_MILLIMETER #(float (/ mm-per-inch %))]})
 
 (def default-jpeg-options {:quality 1})
 
